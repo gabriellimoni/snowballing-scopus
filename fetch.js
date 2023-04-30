@@ -1,7 +1,8 @@
 const apiKey = "";
 const baseUrl = "https://api.elsevier.com/content/search/scopus";
 
-const makeUrl = (article) => `${baseUrl}?query=REF("${article}")&view=complete`;
+const makeUrl = (article) =>
+  `${baseUrl}?query=REF("${article}")&view=complete&sort=-citedby-count`;
 
 module.exports = {
   fetchCitationsFromArticle: async (article) => {
