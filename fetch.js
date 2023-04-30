@@ -13,6 +13,6 @@ module.exports = {
 
     // TODO pagination
 
-    return data;
+    return data["search-results"]["entry"];
   },
 };
