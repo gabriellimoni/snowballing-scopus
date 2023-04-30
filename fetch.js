@@ -6,14 +6,22 @@ const makeUrl = (article) =>
 
 module.exports = {
   fetchCitationsFromArticle: async (article) => {
-    const data = await fetch(makeUrl(article), {
-      headers: {
-        "X-ELS-APIKey": apiKey,
-      },
-    }).then((result) => result.json());
+    const result = [];
 
-    // TODO pagination
+    let url = makeUrl(article);
+    let hasNext;
+    do {
+      const data = await fetch(url, {
+        headers: {
+          "X-ELS-APIKey": apiKey,
+        },
+      }).then((res) => res.json());
+      result.push(...data["search-results"]["entry"]);
 
-    return data["search-results"]["entry"];
+      hasNext = data["search-results"]["link"].find((l) => l["@ref"] == "next");
+      if (hasNext) url = hasNext["@href"];
+    } while (hasNext);
+
+    return result;
   },
 };
