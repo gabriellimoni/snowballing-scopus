@@ -1,5 +1,4 @@
 module.exports = {
-  // TODO use lib to avoid common errors such as parsing ""
   parseCsv: (originArticle, data, withHeader = true) => {
     let csv = "";
     if (withHeader) {
@@ -11,9 +10,11 @@ module.exports = {
     }
 
     data
-      .map((obj) => Object.values(obj).map((d) => `"${d}"`))
+      .map((obj) =>
+        Object.values(obj).map((d) => (d ? `"${d.replace(/"/g, '""')}"` : ""))
+      )
       .forEach((d) => {
-        csv += `"${originArticle}";`;
+        csv += `"${originArticle.replace(/"/g, '""')}";`;
         csv += d;
         csv += "\n";
       });
