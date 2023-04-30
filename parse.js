@@ -1,6 +1,8 @@
 module.exports = {
-  parseCsv: (data) => {
-    let csv = Object.keys(data[0])
+  // TODO use lib to avoid common errors such as parsing ""
+  parseCsv: (originArticle, data) => {
+    let csv = '"originArticle";';
+    csv += Object.keys(data[0])
       .map((key) => `"${key}"`)
       .join(";");
     csv += "\n";
@@ -8,6 +10,7 @@ module.exports = {
     data
       .map((obj) => Object.values(obj).map((d) => `"${d}"`))
       .forEach((d) => {
+        csv += `"${originArticle}";`;
         csv += d;
         csv += "\n";
       });

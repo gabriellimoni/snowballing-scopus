@@ -10,7 +10,7 @@ module.exports = {
 
     if (mappedData.length == 0) return;
 
-    const csv = parseCsv(mappedData);
+    const csv = parseCsv(articleName, mappedData);
     fs.writeFileSync("out.csv", csv);
   },
 };
